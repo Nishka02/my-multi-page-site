@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Motion with Click Example</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none; /* Ensures the emoji does not interfere with other mouse events */
+            transition: opacity 0.5s ease-out; /* Smooth fade-out effect */
+        }
+    </style>
+</head>
+<body>
+    <script>
+        let isMouseDown = false;
+
+        // Function to handle mouse movement
+        function onMouseMove(event) {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji';
+            emoji.innerText = isMouseDown ? '😊' : '😐'; // Smiley when mouse button is down, neutral face otherwise
+            emoji.style.left = `${event.clientX}px`;
+            emoji.style.top = `${event.clientY}px`;
+            document.body.appendChild(emoji);
+
+            // Remove the emoji after it fades out
+            setTimeout(() => {
+                emoji.style.opacity = 0;
+                setTimeout(() => {
+                    emoji.remove();
+                }, 500); // Time for fade-out effect
+            }, 500); // Time for emoji to be visible
+        }
+
+        // Function to handle mouse button down
+        function onMouseDown() {
+            isMouseDown = true;
+        }
+
+        // Function to handle mouse button up
+        function onMouseUp() {
+            isMouseDown = false;
+        }
+
+        // Attach the event listeners
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mousedown', onMouseDown);
+        document.addEventListener('mouseup', onMouseUp);
+    </script>
+</body>
+</html>

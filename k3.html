@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Key Event Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        .message {
+            font-size: 1.5rem;
+            margin: 20px;
+            color: #333;
+        }
+        .key-info {
+            font-size: 1.2rem;
+            color: #007BFF;
+        }
+        .action {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Press any special key to see the result.</div>
+    <div id="keyInfo" class="key-info">Key: None</div>
+    <div id="action" class="action"></div>
+
+    <script>
+        // Function to handle special key presses
+        function handleSpecialKeys(event) {
+            const keyInfo = document.getElementById('keyInfo');
+            const action = document.getElementById('action');
+            let keyDescription;
+
+            // Determine the key pressed and update display
+            switch (event.key) {
+                case 'ArrowUp':
+                    keyDescription = 'Up arrow key pressed.';
+                    action.textContent = 'Moving up!';
+                    break;
+                case 'ArrowDown':
+                    keyDescription = 'Down arrow key pressed.';
+                    action.textContent = 'Moving down!';
+                    break;
+                case 'ArrowLeft':
+                    keyDescription = 'Left arrow key pressed.';
+                    action.textContent = 'Moving left!';
+                    break;
+                case 'ArrowRight':
+                    keyDescription = 'Right arrow key pressed.';
+                    action.textContent = 'Moving right!';
+                    break;
+                case 'F1':
+                    keyDescription = 'F1 key pressed.';
+                    action.textContent = 'Help requested!';
+                    break;
+                default:
+                    keyDescription = 'Other special key pressed.';
+                    action.textContent = 'Unknown key!';
+                    break;
+            }
+
+            // Update key information display
+            keyInfo.textContent = keyDescription;
+        }
+
+        // Attach the key press event listener
+        document.addEventListener('keydown', handleSpecialKeys);
+    </script>
+</body>
+</html>

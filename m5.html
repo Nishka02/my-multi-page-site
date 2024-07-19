@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Blast on Mouse Button Press</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            cursor: crosshair;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 1;
+            transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+            white-space: nowrap;
+        }
+        .left-blast .emoji {
+            animation: leftBlast 1s forwards;
+        }
+        .right-blast .emoji {
+            animation: rightBlast 1s forwards;
+        }
+        @keyframes leftBlast {
+            from {
+                left: -50px;
+                transform: scale(0.5);
+            }
+            to {
+                left: 0;
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+        @keyframes rightBlast {
+            from {
+                right: -50px;
+                transform: scale(0.5);
+            }
+            to {
+                right: 0;
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('mousedown', function(event) {
+            const numberOfEmojis = 100; // Number of emojis to generate
+            const emojiTypes = ['😊', '😂', '😍', '😎', '🤔']; // Different emojis to use
+            const container = document.createElement('div');
+            container.className = event.button === 0 ? 'left-blast' : 'right-blast';
+            
+            for (let i = 0; i < numberOfEmojis; i++) {
+                const emoji = document.createElement('div');
+                emoji.className = 'emoji';
+                emoji.innerText = emojiTypes[Math.floor(Math.random() * emojiTypes.length)];
+                emoji.style.fontSize = `${Math.random() * 2 + 1}rem`; // Random size between 1rem and 3rem
+                emoji.style.top = `${Math.random() * 100}vh`; // Random vertical position
+                emoji.style.left = event.button === 0 ? `${Math.random() * 50}vw` : ''; // Position off-screen left for left button
+                emoji.style.right = event.button === 2 ? `${Math.random() * 50}vw` : ''; // Position off-screen right for right button
+                container.appendChild(emoji);
+            }
+            
+            document.body.appendChild(container);
+
+            // Remove the container after animation ends
+            setTimeout(() => {
+                container.remove();
+            }, 1000); // Match the duration of the animation
+        });
+
+        // Prevent the default context menu on right click
+        document.addEventListener('contextmenu', function(event) {
+            event.preventDefault();
+        });
+    </script>
+</body>
+</html>

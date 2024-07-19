@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Emoji Example</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background-color: #f0f0f0;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            pointer-events: none;
+            transition: opacity 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('mousemove', function(event) {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji';
+            emoji.innerText = '😊'; // Change this to any emoji you like
+            emoji.style.left = `${event.clientX}px`;
+            emoji.style.top = `${event.clientY}px`;
+            document.body.appendChild(emoji);
+
+            // Remove the emoji after it fades out
+            setTimeout(() => {
+                emoji.style.opacity = 0;
+                setTimeout(() => {
+                    emoji.remove();
+                }, 500); // Time for fade-out effect
+            }, 500); // Time for emoji to be visible
+        });
+    </script>
+</body>
+</html>

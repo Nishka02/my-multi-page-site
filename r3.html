@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mug Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            background: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        .product {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        .color-options {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+        .color-option {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: border 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .color-option.selected {
+            border-color: #333;
+            transform: scale(1.15);
+        }
+        .color-option:hover {
+            border-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mug Color Selection</h1>
+
+        <div class="product">
+            <img id="mug-image" src="https://tse2.mm.bing.net/th?id=OIP.Fj45efqdq88Ly_EPvbHWAgHaG9&pid=Api&P=0&h=180" alt="Mug">
+            <div class="color-options" id="color-select">
+                <!-- Color options will be inserted here dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const colorSelect = document.getElementById('color-select');
+        const mugImage = document.getElementById('mug-image');
+
+        // Define color options and corresponding images for the mug
+        const colorDetails = [
+            { color: '#0000ff', imgSrc: 'https://tse1.mm.bing.net/th?id=OIP.zsm-nH5YQKHJGsyYU7DYiwHaHa&pid=Api&P=0&h=180' }, // Blue
+            { color: '#FFFF00', imgSrc: 'https://tse2.mm.bing.net/th?id=OIP.jNZM64cMKjvkyzFt_pQL8QHaHa&pid=Api&P=0&h=180' }, // Yellow
+            { color: '#00ff00', imgSrc: 'https://tse2.mm.bing.net/th?id=OIP.Fj45efqdq88Ly_EPvbHWAgHaG9&pid=Api&P=0&h=180' }  // Green
+        ];
+
+        function updateMugImage(colorIndex) {
+            mugImage.src = colorDetails[colorIndex].imgSrc;
+        }
+
+        colorDetails.forEach((detail, index) => {
+            const colorOption = document.createElement('div');
+            colorOption.className = 'color-option';
+            colorOption.style.backgroundColor = detail.color;
+            colorOption.addEventListener('click', () => {
+                document.querySelectorAll('.color-option').forEach(el => el.classList.remove('selected'));
+                colorOption.classList.add('selected');
+                updateMugImage(index);
+            });
+            colorSelect.appendChild(colorOption);
+        });
+    </script>
+</body>
+</html>

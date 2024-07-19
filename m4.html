@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mouse Enter/Exit Effects</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            font-weight: bold;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+        .raindrop {
+            position: absolute;
+            width: 2px;
+            height: 10px;
+            background: blue;
+            opacity: 0.5;
+            animation: fall linear;
+        }
+        @keyframes fall {
+            to {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="message" class="message"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+        const message = document.getElementById('message');
+
+        // Function to handle mouse enter
+        function onMouseEnter() {
+            message.innerText = 'Welcome!';
+            message.style.opacity = 1;
+
+            // Confetti effect
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.7 }
+            });
+        }
+
+        // Function to handle mouse leave
+        function onMouseLeave() {
+            message.innerText = 'Goodbye!';
+            message.style.opacity = 1;
+
+            // Raindrop effect
+            createRaindrops();
+        }
+
+        // Function to create raindrop effects
+        function createRaindrops() {
+            for (let i = 0; i < 100; i++) {
+                const raindrop = document.createElement('div');
+                raindrop.className = 'raindrop';
+                raindrop.style.left = `${Math.random() * 100}vw`;
+                raindrop.style.animationDuration = `${Math.random() * 2 + 1}s`;
+                document.body.appendChild(raindrop);
+
+                // Remove the raindrop after animation
+                setTimeout(() => {
+                    raindrop.remove();
+                }, 3000); // Should match or exceed the duration of the animation
+            }
+        }
+
+        // Attach event listeners to body
+        document.body.addEventListener('mouseenter', onMouseEnter);
+        document.body.addEventListener('mouseleave', onMouseLeave);
+    </script>
+</body>
+</html>

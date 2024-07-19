@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Shape Color</title>
+    <style>
+        #shape {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            margin-top: 20px;
+        }
+        #newColorInput {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change Shape Color</h1>
+    <label for="colorSelect">Choose a color:</label>
+    <select id="colorSelect">
+        <option value="gray">Gray</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+    </select>
+
+    <div id="shape"></div>
+
+    <div id="newColorInput">
+        <label for="newColor">Add a new color:</label>
+        <input type="text" id="newColor" placeholder="Enter color name">
+        <button id="addColorButton">Add Color</button>
+    </div>
+
+    <script>
+        const colorSelect = document.getElementById('colorSelect');
+        const shape = document.getElementById('shape');
+        const addColorButton = document.getElementById('addColorButton');
+        const newColorInput = document.getElementById('newColor');
+
+        colorSelect.addEventListener('change', function() {
+            shape.style.backgroundColor = this.value;
+        });
+
+        addColorButton.addEventListener('click', function() {
+            const newColor = newColorInput.value.trim();
+            if (newColor) {
+                // Check if color already exists in the select options
+                let colorExists = false;
+                for (let option of colorSelect.options) {
+                    if (option.value === newColor) {
+                        colorExists = true;
+                        break;
+                    }
+                }
+
+                if (!colorExists) {
+                    // Add new color to the select
+                    const option = document.createElement('option');
+                    option.value = newColor;
+                    option.textContent = newColor;
+                    colorSelect.appendChild(option);
+
+                    // Clear the input field
+                    newColorInput.value = '';
+                } else {
+                    alert('Color already exists in the list.');
+                }
+            } else {
+                alert('Please enter a color name.');
+            }
+        });
+    </script>
+</body>
+</html>

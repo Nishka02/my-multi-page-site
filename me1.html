@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Change Shape Color</title>
+    <style>
+        #shape {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Change Shape Color</h1>
+    <label for="colorSelect">Choose a color:</label>
+    <select id="colorSelect">
+        <option value="gray">Gray</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+    </select>
+
+    <div id="shape"></div>
+
+    <script>
+        const colorSelect = document.getElementById('colorSelect');
+        const shape = document.getElementById('shape');
+
+        colorSelect.addEventListener('change', function() {
+            shape.style.backgroundColor = this.value;
+        });
+    </script>
+</body>
+</html>

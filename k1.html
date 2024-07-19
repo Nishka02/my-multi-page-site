@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Event Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        .message {
+            font-size: 1.5rem;
+            margin: 20px;
+            color: #333;
+        }
+        .key-info {
+            font-size: 1.2rem;
+            color: #007BFF;
+        }
+        .expression {
+            font-size: 4rem;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Press any key to see a unique expression.</div>
+    <div id="keyInfo" class="key-info">Key: None | ASCII Code: None</div>
+    <div id="expression" class="expression">😊</div>
+
+    <script>
+        // Function to handle key presses
+        function handleKeyPress(event) {
+            const keyInfo = document.getElementById('keyInfo');
+            const expression = document.getElementById('expression');
+            const key = event.key;
+            const asciiCode = event.keyCode;
+
+            // Update key information display
+            keyInfo.textContent = `Key: ${key} | ASCII Code: ${asciiCode}`;
+
+            // Define unique expressions for different keys
+            let emoji;
+            switch (key) {
+                case 'Escape': // ESC key
+                    emoji = '😱'; // Shocked face
+                    break;
+                case 'Enter': // Enter key
+                    emoji = '😄'; // Grinning face
+                    break;
+                case 'ArrowUp': // Up arrow key
+                    emoji = '⬆️'; // Up arrow
+                    break;
+                case 'ArrowDown': // Down arrow key
+                    emoji = '⬇️'; // Down arrow
+                    break;
+                case 'ArrowLeft': // Left arrow key
+                    emoji = '⬅️'; // Left arrow
+                    break;
+                case 'ArrowRight': // Right arrow key
+                    emoji = '➡️'; // Right arrow
+                    break;
+                case 'a':
+                    emoji = '😃'; // Happy face
+                    break;
+                case 's':
+                    emoji = '😠'; // Angry face
+                    break;
+                case 'd':
+                    emoji = '😴'; // Sleepy face
+                    break;
+                case 'w':
+                    emoji = '😲'; // Surprised face
+                    break;
+                case 'r':
+                    emoji = '🎉'; // Party popper
+                    break;
+                case 't':
+                    emoji = '🤔'; // Thinking face
+                    break;
+                case 'z':
+                    emoji = '😢'; // Crying face
+                    break;
+                case 'x':
+                    emoji = '😎'; // Cool face
+                    break;
+                case 'c':
+                    emoji = '😜'; // Winking face
+                    break;
+                case 'v':
+                    emoji = '😻'; // Heart eyes
+                    break;
+                default:
+                    emoji = '😊'; // Default happy face
+            }
+            
+            // Update expression display
+            expression.textContent = emoji;
+        }
+
+        // Attach the key press event listener
+        document.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>

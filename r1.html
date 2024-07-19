@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Shooting Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        #gameCanvas {
+            background-color: #e0f7fa;
+            display: block;
+        }
+        #scoreBoard {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #00796b;
+        }
+        .explosion {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: url('https://i.imgur.com/7NZ4Ue7.png') no-repeat center center;
+            background-size: cover;
+            pointer-events: none;
+            animation: explode 0.5s ease-out;
+        }
+        @keyframes explode {
+            from {
+                opacity: 1;
+                transform: scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="scoreBoard">Score: 0</div>
+    <canvas id="gameCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreBoard = document.getElementById('scoreBoard');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const emojis = ['😄', '😂', '🤣', '😊', '😎'];
+        const targets = [];
+        let score = 0;
+
+        class Target {
+            constructor(x, y, emoji) {
+                this.x = x;
+                this.y = y;
+                this.emoji = emoji;
+                this.size = 40;
+                this.speed = Math.random() * 3 + 1;
+            }
+
+            draw() {
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText(this.emoji, this.x, this.y);
+            }
+
+            update() {
+                this.x += this.speed;
+                if (this.x > canvas.width) {
+                    this.x = -this.size;
+                    this.y = Math.random() * (canvas.height - this.size);
+                    this.speed = Math.random() * 3 + 1;
+                }
+            }
+        }
+
+        function createTarget() {
+            const x = -40;
+            const y = Math.random() * (canvas.height - 40);
+            const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+            targets.push(new Target(x, y, emoji));
+        }
+
+        function shoot(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+
+            for (let i = 0; i < targets.length; i++) {
+                const target = targets[i];
+                const targetX = target.x + target.size / 2;
+                const targetY = target.y - target.size / 2;
+                if (mouseX >= target.x && mouseX <= target.x + target.size &&
+                    mouseY >= target.y - target.size && mouseY <= target.y) {
+                    showExplosion(targetX, targetY);
+                    targets.splice(i, 1);
+                    score += 1;
+                    scoreBoard.textContent = `Score: ${score}`;
+                    createTarget(); // Add a new target when one is shot
+                    break;
+                }
+            }
+        }
+
+        function showExplosion(x, y) {
+            const explosion = document.createElement('div');
+            explosion.className = 'explosion';
+            explosion.style.left = `${x - 30}px`;
+            explosion.style.top = `${y - 30}px`;
+            document.body.appendChild(explosion);
+            setTimeout(() => {
+                document.body.removeChild(explosion);
+            }, 500);
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            targets.forEach(target => {
+                target.update();
+                target.draw();
+            });
+            requestAnimationFrame(animate);
+        }
+
+        canvas.addEventListener('click', shoot);
+
+        // Initialize the game with a few targets
+        for (let i = 0; i < 5; i++) {
+            createTarget();
+        }
+
+        animate();
+    </script>
+</body>
+</html>
