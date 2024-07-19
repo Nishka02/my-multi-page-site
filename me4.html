@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Dropdown Options</title>
+    <style>
+        #shape {
+            width: 100px;
+            height: 100px;
+            background-color: gray;
+            margin-top: 20px;
+        }
+        #newColorInput, #removeColorInput {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Manage Dropdown Options</h1>
+
+    <label for="mainSelect">Choose a color:</label>
+    <select id="mainSelect">
+        <option value="gray">Gray</option>
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="yellow">Yellow</option>
+    </select>
+
+    <div id="shape"></div>
+
+    <div id="newColorInput">
+        <label for="newColor">Add a new color:</label>
+        <input type="text" id="newColor" placeholder="Enter color name">
+        <button id="addColorButton">Add Color</button>
+    </div>
+
+    <div id="removeColorInput">
+        <label for="removeColor">Remove a color:</label>
+        <input type="text" id="removeColor" placeholder="Enter color name to remove">
+        <button id="removeColorButton">Remove Color</button>
+    </div>
+
+    <script>
+        const mainSelect = document.getElementById('mainSelect');
+        const shape = document.getElementById('shape');
+        const addColorButton = document.getElementById('addColorButton');
+        const newColorInput = document.getElementById('newColor');
+        const removeColorButton = document.getElementById('removeColorButton');
+        const removeColorInput = document.getElementById('removeColor');
+
+        mainSelect.addEventListener('change', function() {
+            shape.style.backgroundColor = this.value;
+        });
+
+        addColorButton.addEventListener('click', function() {
+            const newColor = newColorInput.value.trim();
+            if (newColor) {
+                let colorExists = false;
+                for (let option of mainSelect.options) {
+                    if (option.value === newColor) {
+                        colorExists = true;
+                        break;
+                    }
+                }
+
+                if (!colorExists) {
+                    const option = document.createElement('option');
+                    option.value = newColor;
+                    option.textContent = newColor;
+                    mainSelect.appendChild(option);
+                    newColorInput.value = '';
+                } else {
+                    alert('Color already exists in the list.');
+                }
+            } else {
+                alert('Please enter a color name.');
+            }
+        });
+
+        removeColorButton.addEventListener('click', function() {
+            const colorToRemove = removeColorInput.value.trim();
+            if (colorToRemove) {
+                let optionRemoved = false;
+                for (let option of mainSelect.options) {
+                    if (option.value === colorToRemove) {
+                        mainSelect.removeChild(option);
+                        optionRemoved = true;
+                        break;
+                    }
+                }
+                if (!optionRemoved) {
+                    alert('Color not found in the list.');
+                }
+                removeColorInput.value = '';
+            } else {
+                alert('Please enter a color name to remove.');
+            }
+        });
+    </script>
+</body>
+</html>
