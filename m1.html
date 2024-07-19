@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emoji Click</title>
+    <style>
+        body {
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            position: relative;
+        }
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            transition: opacity 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        document.addEventListener('click', function(event) {
+            const emoji = document.createElement('div');
+            emoji.className = 'emoji';
+            emoji.innerText = '😊';
+            emoji.style.left = `${event.clientX}px`;
+            emoji.style.top = `${event.clientY}px`;
+            document.body.appendChild(emoji);
+
+            setTimeout(() => {
+                emoji.style.opacity = 0;
+                setTimeout(() => {
+                    emoji.remove();
+                }, 1000);
+            }, 1000); // Fade out emoji after 1 second
+        });
+    </script>
+</body>
+</html>
